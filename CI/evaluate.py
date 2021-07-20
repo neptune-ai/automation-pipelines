@@ -28,7 +28,6 @@ parameters = run['config/hyperparameters'].fetch()
 parameters['device'] = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 data_dir = run['config/dataset/path'].fetch()
-classes = run['config/dataset/classes'].fetch()
 
 model_fname = 'model.pth'
 model_weights = run['io_files/artifacts/basemodel'].download(f'./{model_fname}')
