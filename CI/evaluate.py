@@ -1,16 +1,14 @@
-
-
-from .model import get_model
 from .model import *
 from .data import get_dataloader
 import neptune.new as neptune
+import os
 
 project_name = 'common/pytorch-integration'
 
 # fetch project 
 project = neptune.get_project(
     name = project_name,
-    api_token='ANONYMOUS')
+    api_token=os.getenv("NEPTUNE_API_TOKEN"))
 
 # filter in-prod run
 runs_table_df = project.fetch_runs_table(tag='in-prod').to_pandas()
@@ -19,7 +17,7 @@ run_id = runs_table_df['sys/id'].values[0]
 # retrieve run in read mode
 run = neptune.init(
     project=project_name,
-    api_token='ANONYMOUS',
+    api_token=os.getenv("NEPTUNE_API_TOKEN"),
     run = run_id,
     mode = 'read-only'
 )

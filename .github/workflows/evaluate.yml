@@ -1,0 +1,23 @@
+name: continuous integration
+on:
+  push:
+    path:
+      - 'how-to-guides/CI/*'
+  schedule:
+    - cron: '0 */24 * * *' # 24 hours.
+jobs:
+  prod-monitoring:
+    runs-on: ubuntu-latest
+    env:
+      NEPTUNE_API_TOKEN: 'ANONYMOUS' #${{ secrets.NEPTUNE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r how-to-guides/CI/scripts/requirements.txt
+      - name: Get monitoring metadata
+        run: python how-to-guides/CI/scripts/evaluate.py
