@@ -1,5 +1,5 @@
-from model import *
-from data import get_dataloader
+from ..model import *
+from ..data import get_dataloader
 import neptune.new as neptune
 import os
 import random
@@ -33,7 +33,7 @@ model_fname = 'model.pth'
 model_weights = run['io_files/artifacts/basemodel'].download(f'./{model_fname}')
 
 # Load model checkpoint and validation set
-model = get_model(parameters, model_fname).to('cpu')
+model = get_model(parameters, model_fname)
 validloader = get_dataloader(data_dir, parameters['bs'])
 images, labels = next(iter(validloader))
 

@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Continuous Delivery
 on:
   push:
   schedule:
@@ -16,6 +16,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r CI/requirements.txt
+          pip install -r requirements.txt
       - name: Model validation
-        run: python CI/evaluate.py
+        run: python CD/model_promotion.py
