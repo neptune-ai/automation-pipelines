@@ -1,5 +1,5 @@
-from model import *
-from data import get_dataloader
+from ..model import *
+from ..data import get_dataloader
 import neptune.new as neptune
 import os
 import random
