@@ -16,6 +16,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r CI/requirements.txt
+          pip install -r requirements.txt
       - name: Model validation
         run: python CI/evaluate.py
