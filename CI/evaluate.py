@@ -51,6 +51,6 @@ threshold = random.uniform(0.30, 0.65)
 # Test metric against threshold
 assert acc >= threshold, f'Model accuracy {acc*100}%  is lower than threshold {threshold*100}%'
 
-print('test')
+print('Passed!!!')
 
 
