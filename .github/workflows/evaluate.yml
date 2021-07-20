@@ -2,7 +2,7 @@ name: continuous integration
 on:
   push:
     paths:
-      - 'how-to-guides/CI/*'
+      - 'CI/*'
   schedule:
     - cron: '0 */24 * * *' # 24 hours.
 jobs:
