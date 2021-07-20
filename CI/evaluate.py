@@ -43,7 +43,7 @@ output = model(images)
 _, preds = torch.max(output, dim=1)
 
 # Get Metric
-acc = (torch.sum(preds == labels)) / len(images)
+acc = (torch.sum(preds == labels).numpy()) / len(images)
 acc = round(acc, 2)
 
 # Threshold
