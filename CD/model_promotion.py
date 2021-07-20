@@ -75,5 +75,5 @@ assert stagging_score >= prod_score, \
     f'Stagging model accuracy {round(stagging_score*100,2)} lower than threshold {round(prod_score*100,2)}%'
 
 print('Test Passed!!!')
-print(f'Model from run_id={stagging_run_id} has accucy of {round(stagging_score*100,2)}% that is greater than production model was promoted to production')
+print(f'Model from run_id={stagging_run_id} has accucy of {stagging_score*100}% that is greater than production model was promoted to production')
 
