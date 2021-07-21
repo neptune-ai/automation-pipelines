@@ -2,7 +2,6 @@ from model import *
 from data import get_dataloader
 import neptune.new as neptune
 import os
-import random
 
 project_name = 'common/pytorch-integration'
 
@@ -70,7 +69,7 @@ _, stagging_preds = torch.max(stagging_output, dim=1)
 
 stagging_score = (torch.sum(stagging_preds == labels)) / len(images)
 
-# Test metric against threshold
+# Test stagging model score against production model score
 assert stagging_score >= prod_score, \
     f'Stagging model accuracy {round(stagging_score*100,2)} lower than threshold {round(prod_score*100,2)}%'
 
