@@ -59,6 +59,6 @@ validation_score = prod_run['validation/best_acc'].fetch()
 
 # Test production model score agaisnt threshold
 assert prod_score >= validation_score, \
-f'Production model accuracy {round(prod_score.item()*100,2)}% is lower than normal. Running retrain.py'
+f'Warning: Production model accuracy {round(prod_score.item()*100,2)}% is lower than normal. Running retrain.py'
 print('Test Passed!!!')
 print('No drift detected in the production model')
