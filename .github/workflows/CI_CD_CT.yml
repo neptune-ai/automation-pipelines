@@ -21,5 +21,5 @@ jobs:
         run: python CI/evaluate.py
       - name: Model Promotion(CD)
         run: python CD/model_promotion.py
-      - name: Detect Drift(CT)
+      - name: Detect Model Drift(CT)
         run: python CT/drift_detection.py

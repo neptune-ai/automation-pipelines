@@ -45,7 +45,7 @@ _, preds = torch.max(output, dim=1)
 acc = (torch.sum(preds == labels)) / len(images)
 
 # Threshold
-threshold = round(random.uniform(0.30, 0.65), 2)
+threshold = round(random.uniform(0.55, 0.58), 2)
 
 # Test metric against threshold
 assert acc >= threshold, f'Model accuracy {acc*100}%  is lower than threshold {threshold*100}%'
