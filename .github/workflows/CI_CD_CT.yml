@@ -22,4 +22,4 @@ jobs:
       - name: Model Promotion(CD)
         run: python CD/model_promotion.py
       - name: Detect Drift(CT)
-        run: python CD/model_promotion.py
+        run: python CT/drift_detection.py
