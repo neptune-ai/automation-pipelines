@@ -52,5 +52,3 @@ assert acc >= threshold, f'Model accuracy {acc*100}%  is lower than threshold {t
 
 print(f'Model accuracy {acc*100}%  is higer than threshold {threshold*100}%')
 print('Test Passed!!!')
-
-
