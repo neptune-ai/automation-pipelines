@@ -19,3 +19,9 @@ jobs:
           pip install -r CI_CD/requirements.txt
       - name: Model Promotion(CI/CD)
         run: python CI_CD/scripts/model_promotion.py
+      - name: Deployment
+        if: success()
+        run: |
+          echo "Test passed!!!"
+          echo "Deploying Model with run_id = $run_id ""
+

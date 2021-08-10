@@ -8,7 +8,7 @@ project_name = 'common/pytorch-integration'
 # Fetch project 
 project = neptune.get_project(
     name = project_name,
-    api_token=os.getenv("NEPTUNE_API_TOKEN"))
+    api_token='ANONYMOUS')
 
 # In-prod
 # Filter in-prod run
@@ -73,7 +73,8 @@ stagging_score = (torch.sum(stagging_preds == labels)) / len(images)
 assert stagging_score >= prod_score, \
     f'Stagging model accuracy {round(stagging_score*100,2)} lower than threshold {round(prod_score*100,2)}%'
 
-print('Test Passed!!!')
 print(f'Model from run_id={stagging_run_id} has accucy of {stagging_score*100}% that is greater than production model was promoted to production')
-print(f'Deploying model from run_id={stagging_run_id}')
+
+os.environ['run_id'] = f'{stagging_run_id}'
+
 
