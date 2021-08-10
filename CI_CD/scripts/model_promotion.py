@@ -8,7 +8,7 @@ project_name = 'common/pytorch-integration'
 # Fetch project 
 project = neptune.get_project(
     name = project_name,
-    api_token='ANONYMOUS')
+    api_token=os.getenv("NEPTUNE_API_TOKEN"))
 
 # In-prod
 # Filter in-prod run
@@ -18,7 +18,7 @@ prod_run_id = prod_runs_table_df['sys/id'].values[0]
 # Retrieve run in read mode
 prod_run = neptune.init(
     project=project_name,
-    api_token='ANONYMOUS',
+    api_token=os.getenv("NEPTUNE_API_TOKEN"),
     run = prod_run_id,
     mode = 'read-only'
 )
@@ -31,7 +31,7 @@ stagging_run_id = stagging_runs_table_df['sys/id'].values[0]
 # Retrieve run
 stagging_run = neptune.init(
     project=project_name,
-    api_token='ANONYMOUS',
+    api_token=os.getenv("NEPTUNE_API_TOKEN"),
     run = stagging_run_id
 )
 
@@ -74,7 +74,6 @@ assert stagging_score >= prod_score, \
     f'Stagging model accuracy {round(stagging_score*100,2)} lower than threshold {round(prod_score*100,2)}%'
 
 print(f'Model from run_id={stagging_run_id} has accucy of {stagging_score*100}% that is greater than production model was promoted to production')
-
-os.environ['run_id'] = f'{stagging_run_id}'
+os.environ.putenv('run_id', f'{stagging_run_id}')
 
 
