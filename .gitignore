@@ -1,3 +1,4 @@
 .DS_Store
-./CT
+CT/*
 .github/workflows/CT.yml
+

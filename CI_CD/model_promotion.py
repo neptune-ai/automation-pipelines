@@ -75,4 +75,5 @@ assert stagging_score >= prod_score, \
 
 print('Test Passed!!!')
 print(f'Model from run_id={stagging_run_id} has accucy of {stagging_score*100}% that is greater than production model was promoted to production')
+print(f'Deploying model from run_id={stagging_run_id}')
 
