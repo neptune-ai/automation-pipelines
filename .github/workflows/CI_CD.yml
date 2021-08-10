@@ -1,8 +1,8 @@
-name: CI/CD
+name: CI/CD 
 on:
   push:
   schedule:
-    - cron: '0 */24 * * *' # 24 hours.
+    - cron: '0 */12 * * 5' # every friday at 12 PM UTC
 jobs:
   prod-monitoring:
     runs-on: ubuntu-latest
