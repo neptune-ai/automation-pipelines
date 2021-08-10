@@ -23,5 +23,5 @@ jobs:
         if: success()
         run: |
           echo "Test passed!!!"
-          echo "Deploying Model with run_id = ${{ env.run_id }}"
+          echo "Deploying Model ID ${{ env.run_id }}"
 
