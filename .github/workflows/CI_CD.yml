@@ -23,5 +23,5 @@ jobs:
         if: success()
         run: |
           echo "Test passed!!!"
-          echo "Deploying Model with run_id = $run_id ""
+          echo "Deploying Model with run_id = $run_id"
 
