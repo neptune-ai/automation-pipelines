@@ -22,6 +22,7 @@ jobs:
       - name: Deployment
         if: success()
         run: |
-          echo "Test passed!!!"
-          echo "Deploying Model ID ${{ env.run_id }}"
+        echo "Evaluation test passed!!!"
+        echo "Deploying Model..."
+        python CI_CD/scripts/deployment.py
 

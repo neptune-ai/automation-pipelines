@@ -33,7 +33,8 @@ stagging_run_id = stagging_runs_table_df['sys/id'].values[0]
 stagging_run = neptune.init(
     project=project_name,
     api_token=os.getenv("NEPTUNE_API_TOKEN"),
-    run = stagging_run_id
+    run = stagging_run_id,
+    mode = 'read-only'
 )
 
 # Fetching and downloading data from Neptune
@@ -72,9 +73,9 @@ stagging_score = (torch.sum(stagging_preds == labels)) / len(images)
 
 # Test stagging model score against production model score
 assert stagging_score >= prod_score, \
-    f'Stagging model accuracy {round(stagging_score*100,2)} lower than threshold {round(prod_score*100,2)}%'
+    f'Staging model accuracy {round(stagging_score*100,2)} lower than threshold {round(prod_score*100,2)}%'
 
-print(f'Model from run_id={stagging_run_id} has accucy of {stagging_score*100}% that is greater than production model was promoted to production')
-os.environ['run_id'] = f'{stagging_run_id}'
+print(f'Staging model with run_id = {stagging_run_id} has accuracy of {stagging_score*100}% that is greater than the current production-model was promoted to production')
+
 
 
