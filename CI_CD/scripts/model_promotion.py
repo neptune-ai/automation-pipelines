@@ -79,7 +79,7 @@ assert stagging_score >= prod_score, \
 
 print(f'Staging model with run_id = {stagging_run_id} has accuracy of {stagging_score*100}% that is greater than the current production-model was promoted to production')
 
-os.environ.set["NEW_BEST_RUN_ID"] = stagging_run_id
+os.environ["NEW_BEST_RUN_ID"] = stagging_run_id
 command = ['sqsub', '-np', sys.argv[2], '.']
 subprocess.check_call(command)
 
