@@ -1,8 +1,7 @@
 name: CI/CD 
 on:
   push:
-  schedule:
-    - cron: '0 */12 * * 5' # every friday at 12 PM UTC
+    
 jobs:
   model-eval-promotion:
     runs-on: ubuntu-latest
