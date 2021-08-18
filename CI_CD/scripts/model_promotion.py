@@ -79,5 +79,11 @@ assert stagging_score >= prod_score, \
 
 print(f'Staging model with run_id = {stagging_run_id} has accuracy of {stagging_score*100}% that is greater than the current production-model was promoted to production')
 
-os.environ["NEW_BEST_RUN_ID"] = stagging_run_id
-os.system('bash')
+print("------------Evaluation test passed!!!------------")
+
+def deployment(new_best_run_id):
+    # here you can write you deployment logic!
+    print(f'Deploying Model with Run ID {new_best_run_id}')
+
+
+deployment(stagging_run_id)

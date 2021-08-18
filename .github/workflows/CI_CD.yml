@@ -14,18 +14,16 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.8
-      # - name: Install dependencies
-      #   run: |
-      #     python -m pip install --upgrade pip
-      #     pip install -r CI_CD/requirements.txt
-      # - name: Model Promotion(CI/CD)
-      #   run: python CI_CD/scripts/model_promotion.py
-      - name: Deployment
-        # if: success()
+      - name: Install dependencies
         run: |
-          echo "Evaluation test passed!!!"
-          echo "Deploying Model..."
-          python -c '#!/bin/bash import os; os.system("export NEW_BEST_RUN_ID = 1233;")'
-          echo "$NEW_BEST_RUN_ID"
+          python -m pip install --upgrade pip
+          pip install -r CI_CD/requirements.txt
+      - name: Model Promotion(CI/CD)
+        run: python CI_CD/scripts/model_promotion.py
+      - name: Deployment Status
+        if: success()
+        run: |
+          echo "MODEL DEPLOYED SUCCESSFULLY!!!"
+          
         
-        # python CI_CD/scripts/deployment.py '${{ env.NEW_BEST_RUN_ID }}'
+  
