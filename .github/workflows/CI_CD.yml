@@ -23,7 +23,6 @@ jobs:
       - name: Deployment
         if: success()
         run: |
-        echo "Evaluation test passed!!!"
-        echo "Deploying Model..."
-        python CI_CD/scripts/deployment.py '${{ env.NEW_BEST_RUN_ID }}''
-
+          echo "Evaluation test passed!!!"
+          echo "Deploying Model..."
+          python CI_CD/scripts/deployment.py '${{ env.NEW_BEST_RUN_ID }}'
