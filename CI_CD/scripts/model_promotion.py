@@ -2,6 +2,8 @@ from model import *
 from data import get_dataloader
 import neptune.new as neptune
 import os
+import subprocess
+import sys
 
 project_name = 'common/pytorch-integration'
 
@@ -76,5 +78,8 @@ assert stagging_score >= prod_score, \
     f'Staging model accuracy {round(stagging_score*100,2)} lower than threshold {round(prod_score*100,2)}%'
 
 print(f'Staging model with run_id = {stagging_run_id} has accuracy of {stagging_score*100}% that is greater than the current production-model was promoted to production')
-os.environ['NEW_BEST_RUN_ID'] = stagging_run_id
+
+os.environ.set["NEW_BEST_RUN_ID"] = stagging_run_id
+command = ['sqsub', '-np', sys.argv[2], '.']
+subprocess.check_call(command)
 
