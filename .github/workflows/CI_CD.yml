@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NEPTUNE_API_TOKEN: 'ANONYMOUS' #${{ secrets.NEPTUNE_API_TOKEN }}
-      NEW_BEST_RUN_ID: ''
+      NEW_BEST_RUN_ID: 
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -25,7 +25,7 @@ jobs:
         run: |
           echo "Evaluation test passed!!!"
           echo "Deploying Model..."
-          python -c "import os; os.system('export NEW_ID = 1233;')"
-          echo "${{ NEW_ID }}"
+          python -c "import os; os.system('export env.NEW_BEST_RUN_ID = 1233;')"
+          echo "${{env.NEW_BEST_RUN_ID}}"
         
         # python CI_CD/scripts/deployment.py '${{ env.NEW_BEST_RUN_ID }}'
