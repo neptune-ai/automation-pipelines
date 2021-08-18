@@ -1,8 +1,8 @@
 import argparse
 
 parser = argparse.ArgumentParser(description='Parse Model ID.')
-parser.add_argument('new_best_run_id', metavar='N', type=int, nargs='+',
-                    help='an integer for the accumulator')
+parser.add_argument('new_best_run_id', type=int,
+                    help='New best run ID')
 
 arg = parser.parse_args()
 
