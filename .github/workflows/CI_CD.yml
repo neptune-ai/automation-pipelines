@@ -25,7 +25,7 @@ jobs:
         run: |
           echo "Evaluation test passed!!!"
           echo "Deploying Model..."
-          python -c "import os; os.system('export NEW_BEST_RUN_ID = 1233')"
+          python -c "import os; os.system('export env.NEW_BEST_RUN_ID = 1233;')"
           echo "${{env.NEW_BEST_RUN_ID}}"
         
         # python CI_CD/scripts/deployment.py '${{ env.NEW_BEST_RUN_ID }}'
