@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 */12 * * 5' # every friday at 12 PM UTC
 jobs:
-  prod-monitoring:
+  model-eval:
     runs-on: ubuntu-latest
     env:
       NEPTUNE_API_TOKEN: 'ANONYMOUS' #${{ secrets.NEPTUNE_API_TOKEN }}
@@ -26,6 +26,6 @@ jobs:
           echo "Evaluation test passed!!!"
           echo "Deploying Model..."
           python -c "import os; os.system('export NEW_BEST_RUN_ID = 1233')"
-          echo "env.NEW_BEST_RUN_ID"
+          echo "${{env.NEW_BEST_RUN_ID}}"
         
         # python CI_CD/scripts/deployment.py '${{ env.NEW_BEST_RUN_ID }}'
