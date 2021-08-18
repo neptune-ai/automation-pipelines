@@ -4,11 +4,10 @@ on:
   schedule:
     - cron: '0 */12 * * 5' # every friday at 12 PM UTC
 jobs:
-  model-eval:
+  model-eval-promotion:
     runs-on: ubuntu-latest
     env:
-      NEPTUNE_API_TOKEN: 'ANONYMOUS' #${{ secrets.NEPTUNE_API_TOKEN }}
-      NEW_BEST_RUN_ID: 
+      NEPTUNE_API_TOKEN: 'ANONYMOUS' #${{ secrets.NEPTUNE_API_TOKEN }} 
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -22,8 +21,7 @@ jobs:
         run: python CI_CD/scripts/model_promotion.py
       - name: Deployment Status
         if: success()
-        run: |
-          echo "MODEL DEPLOYED SUCCESSFULLY!!!"
+        run: echo "MODEL DEPLOYED SUCCESSFULLY!!!"
           
         
   
