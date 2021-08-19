@@ -62,7 +62,7 @@ challenger_score = get_model_score(challenger_model, images, labels)
 assert challenger_score >= champion_score, \
     f'The challenger model accuracy {round(challenger_score*100,2)} lower than threshold {round(champion_score*100,2)}%'
 
-print(f'The challenger model with run_id = {challenger_run_id} has accuracy of {challenger_score*100}% that is greater than the current champion is promoted to production')
+print(f'The challenger model with Run ID  {challenger_run_id} has accuracy of {challenger_score*100}% that is greater than the current champion is promoted to production')
 
 print("------------Evaluation test passed!!!------------")
 
