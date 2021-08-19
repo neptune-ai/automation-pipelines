@@ -43,7 +43,7 @@ def build_model(run):
     model_weights = run['io_files/artifacts/basemodel'].download(model_fname)
 
     # Loading model weights
-    model = get_model(parameters, champion_model_fname)
+    model = get_model(parameters, model_fname)
     return model
 
 
