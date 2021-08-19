@@ -18,9 +18,6 @@ jobs:
           pip install -r CI_CD/requirements.txt
       - name: Model Promotion(CI/CD)
         run: python CI_CD/scripts/model_promotion.py
-      - name: Deployment Status
-        if: success()
-        run: echo "MODEL DEPLOYED SUCCESSFULLY!!!"
           
         
   

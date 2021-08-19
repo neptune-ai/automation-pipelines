@@ -20,6 +20,7 @@ class BaseModel(nn.Module):
 
 
 def get_model(parameters, model_fname):
+
     model = BaseModel(
         parameters["input_sz"], parameters["input_sz"], parameters["n_classes"]
     ).to(parameters["device"])
@@ -29,3 +30,24 @@ def get_model(parameters, model_fname):
     model.eval()
 
     return model
+
+def build_model(run):
+    parameters = run['config/hyperparameters'].fetch()
+    parameters['device'] = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+    # Downloading model weights
+    if 'champion' in run['sys/tags'].fetch(): 
+        model_fname = './champion_model.pth'
+    else:
+        model_fname = './challenger_model.pth'
+    model_weights = champion_run['io_files/artifacts/basemodel'].download(model_fname)
+
+    # Loading model weights
+    model = get_model(parameters, champion_model_fname)
+    return model
+
+
+def get_model_score(model, images, labels):
+    output = model(images)
+    _, preds = torch.max(output, dim=1)
+    return (torch.sum(preds == labels)) / len(images)

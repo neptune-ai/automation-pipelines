@@ -13,77 +13,62 @@ project = neptune.get_project(
     api_token=os.getenv("NEPTUNE_API_TOKEN")
 )
 
-# In-prod
-# Filter in-prod run
-prod_runs_table_df = project.fetch_runs_table(tag='in-prod').to_pandas()
-prod_run_id = prod_runs_table_df['sys/id'].values[0]
+# Champion
+# Filter champion run
+champion_runs_table_df = project.fetch_runs_table(tag='champion').to_pandas()
+champion_run_id = champion_runs_table_df['sys/id'].values[0]
 
 # Retrieve run in read mode
-prod_run = neptune.init(
+champion_run = neptune.init(
     project=project_name,
     api_token=os.getenv("NEPTUNE_API_TOKEN"),
-    run = prod_run_id,
+    run = champion_run_id,
     mode = 'read-only'
 )
 
-# Stagging
-# filter stagging run
-stagging_runs_table_df = project.fetch_runs_table(tag='stagging').to_pandas()
-stagging_run_id = stagging_runs_table_df['sys/id'].values[0]
+# Challenger
+# Filter challenger run
+challenger_runs_table_df = project.fetch_runs_table(tag='challenger').to_pandas()
+challenger_run_id = challenger_runs_table_df['sys/id'].values[0]
 
 # Retrieve run
-stagging_run = neptune.init(
+challenger_run = neptune.init(
     project=project_name,
     api_token=os.getenv("NEPTUNE_API_TOKEN"),
-    run = stagging_run_id,
+    run = challenger_run_id,
     mode = 'read-only'
 )
 
-# Fetching and downloading data from Neptune
-parameters = prod_run['config/hyperparameters'].fetch()
-parameters['device'] = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+# Fetch and download metadata from Neptune
 
-data_dir = prod_run['config/dataset/path'].fetch()
-
-# In-prod model weights
-prod_model_fname = './prod_model.pth'
-prod_model_weights = prod_run['io_files/artifacts/basemodel'].download(prod_model_fname)
-
-# Stagging model weights
-stagging_model_fname = './stagging_model.pth'
-stagging_model_weights = stagging_run['io_files/artifacts/basemodel'].download(stagging_model_fname)
-
-# Load model checkpoints 
-prod_model = get_model(parameters, prod_model_fname)
-stagging_model = get_model(parameters, stagging_model_fname)
+# Feth dataset path
+data_dir = champion_run['config/dataset/path'].fetch()
 
 # Load and validation set
 validloader = get_dataloader(data_dir, parameters['bs'])
 images, labels = next(iter(validloader))
 
-# Run in-prod model inference on validation set
-prod_output = prod_model(images)
-_, prod_preds = torch.max(prod_output, dim=1)
+# Download and load model weights
+champion_model = build_model(champion_run)
+challenger_model = build_model(challenger_run)
 
-prod_score = (torch.sum(prod_preds == labels)) / len(images)
+# Run inference on validation set and get score
+champion_score = get_model_score(champion_model, images,labels)
+challenger_score = get_model_score(challenger_model, images, labels)
 
-# Run in-prod model inference on validation set
-stagging_output = stagging_model(images)
-_, stagging_preds = torch.max(stagging_output, dim=1)
+# Test challenger model score against champion model score
+assert challenger_score >= champion_score, \
+    f'The challenger model accuracy {round(challenger_score*100,2)} lower than threshold {round(champion_score*100,2)}%'
 
-stagging_score = (torch.sum(stagging_preds == labels)) / len(images)
-
-# Test stagging model score against production model score
-assert stagging_score >= prod_score, \
-    f'Staging model accuracy {round(stagging_score*100,2)} lower than threshold {round(prod_score*100,2)}%'
-
-print(f'Staging model with run_id = {stagging_run_id} has accuracy of {stagging_score*100}% that is greater than the current production-model was promoted to production')
+print(f'The challenger model with run_id = {challenger_run_id} has accuracy of {challenger_score*100}% that is greater than the current champion is promoted to production')
 
 print("------------Evaluation test passed!!!------------")
 
+print('Deploying Model...')
+
 def deployment(new_best_run_id):
     # here you can write you deployment logic!
-    print(f'Deploying Model with Run ID {new_best_run_id}')
+    print(f'Challenger model with Run ID {new_best_run_id} deployed successfully!!!')
 
 
-deployment(stagging_run_id)
+deployment(challenger_run_id)
