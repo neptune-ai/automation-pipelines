@@ -44,8 +44,10 @@ challenger_run = neptune.init(
 # Feth dataset path
 data_dir = champion_run['config/dataset/path'].fetch()
 
+batch_size = challenger_run['config/hyperparameters/bs'].fetch()
+
 # Load and validation set
-validloader = get_dataloader(data_dir, parameters['bs'])
+validloader = get_dataloader(data_dir, batch_size)
 images, labels = next(iter(validloader))
 
 # Download and load model weights
