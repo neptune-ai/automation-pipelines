@@ -1,7 +1,5 @@
 name: CI/CD 
-on:
-  push:
-    
+on: push 
 jobs:
   model-eval-promotion:
     runs-on: ubuntu-latest
