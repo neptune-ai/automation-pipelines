@@ -4,7 +4,7 @@ jobs:
   model-eval-promotion:
     runs-on: ubuntu-latest
     env:
-      NEPTUNE_API_TOKEN: 'ANONYMOUS' #${{ secrets.NEPTUNE_API_TOKEN }} 
+      NEPTUNE_API_TOKEN: ${{ secrets.NEPTUNE_API_TOKEN }} 
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
