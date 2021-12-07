@@ -40,7 +40,8 @@ def build_model(run):
         model_fname = './champion_model.pth'
     else:
         model_fname = './challenger_model.pth'
-    model_weights = run['io_files/artifacts/basemodel'].download(model_fname)
+    
+    run['io_files/artifacts/basemodel'].download(model_fname)
 
     # Loading model weights
     model = get_model(parameters, model_fname)
